@@ -19,7 +19,7 @@ toc: true
 | Qt | Qt 6 Widgets, Core y Test |
 | C++ | C++20 |
 | CMake | 4.2.3 |
-| URL del commit evaluado | Pendiente: la carpeta de trabajo inicial no era un repositorio Git |
+| URL del commit evaluado | https://github.com/ronaldcamani/lab09-mvc-qt/commit/392cfd8 |
 
 # 2. Objetivo y alcance
 

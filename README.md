@@ -37,4 +37,4 @@ Factory Method se justifica porque agregar un tipo de actividad requiere un nuev
 
 ## Entrega
 
-Integrante registrado en el informe: Ronald Camani. La carpeta de trabajo original no era un repositorio Git, por lo que la URL de commit queda pendiente de reemplazarse al publicar el proyecto.
+Integrante registrado en el informe: Ronald Camani. Repositorio: https://github.com/ronaldcamani/lab09-mvc-qt. Commit evaluado: https://github.com/ronaldcamani/lab09-mvc-qt/commit/392cfd8.
