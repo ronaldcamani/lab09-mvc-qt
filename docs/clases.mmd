@@ -1,0 +1,112 @@
+```mermaid
+classDiagram
+    direction LR
+
+    class ActividadData {
+        +QString titulo
+        +QString curso
+        +QDate fecha
+        +QString responsable
+    }
+
+    class Actividad {
+        <<abstract>>
+        -ActividadData data_
+        +Actividad(data)
+        +QString tipo()
+        +ActividadData datos()
+        +QString resumen()
+    }
+
+    class Tarea {
+        +QString tipo()
+    }
+
+    class Examen {
+        +QString tipo()
+    }
+
+    class Proyecto {
+        +QString tipo()
+    }
+
+    class ActividadCreator {
+        <<abstract>>
+        +unique_ptr~Actividad~ crear(data)
+        #unique_ptr~Actividad~ crearProducto(data)
+    }
+
+    class TareaCreator {
+        #unique_ptr~Actividad~ crearProducto(data)
+    }
+
+    class ExamenCreator {
+        #unique_ptr~Actividad~ crearProducto(data)
+    }
+
+    class ProyectoCreator {
+        #unique_ptr~Actividad~ crearProducto(data)
+    }
+
+    class IRepositorio {
+        <<interface>>
+        +void guardar(actividad)
+        +vector~Actividad~ listar()
+    }
+
+    class RepositorioActividades {
+        -vector~Actividad~ actividades_
+        +void guardar(actividad)
+        +vector~Actividad~ listar()
+    }
+
+    class CsvLegacySource {
+        -QString ruta_
+        +vector~LegacyRecord~ leer()
+    }
+
+    class CsvRepositorioAdapter {
+        -CsvLegacySource fuente_
+        -RepositorioActividades repositorio_
+        +void cargar()
+        +void guardar(actividad)
+        +vector~Actividad~ listar()
+    }
+
+    class ActividadController {
+        -IRepositorio repositorio_
+        +void crearActividad(tipo, datos)
+        +void cargarCsv(ruta)
+        +void listarActividades()
+        .. señales ..
+        +actividadesActualizadas(resumenes)
+        +operacionCompletada(mensaje)
+        +errorOcurrido(mensaje)
+    }
+
+    class MainWindow {
+        -ActividadController controller_
+        +construirUi()
+    }
+
+    ActividadData <-- Actividad : contiene
+    Actividad <|-- Tarea
+    Actividad <|-- Examen
+    Actividad <|-- Proyecto
+
+    ActividadCreator <|-- TareaCreator
+    ActividadCreator <|-- ExamenCreator
+    ActividadCreator <|-- ProyectoCreator
+    ActividadCreator ..> Actividad : Factory Method
+
+    IRepositorio <|.. RepositorioActividades
+    IRepositorio <|.. CsvRepositorioAdapter
+    RepositorioActividades o-- Actividad : almacena
+
+    CsvRepositorioAdapter *-- CsvLegacySource : adapta
+    CsvRepositorioAdapter *-- RepositorioActividades : delega
+
+    ActividadController --> IRepositorio : usa
+    ActividadController ..> ActividadCreator : selecciona
+    MainWindow --> ActividadController : señales y ranuras
+```

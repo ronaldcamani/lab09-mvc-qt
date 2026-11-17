@@ -1,0 +1,18 @@
+@startuml
+actor Usuario
+participant MainWindow as Vista
+participant ActividadController as Controlador
+participant ActividadCreator as Factory
+participant RepositorioActividades as Modelo
+
+Usuario -> Vista: Completa formulario y pulsa Crear
+Vista -> Controlador: crearActividad(tipo, datos)
+Controlador -> Factory: crear(datos)
+Factory -> Factory: validar datos
+Factory --> Controlador: Actividad concreta
+Controlador -> Modelo: guardar(actividad)
+Controlador -> Modelo: listar()
+Modelo --> Controlador: actividades
+Controlador -> Vista: actividadesActualizadas(resumenes)
+Vista --> Usuario: Actualiza lista
+@enduml

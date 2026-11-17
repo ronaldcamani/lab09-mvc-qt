@@ -1,0 +1,43 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Actividad {
+  - data_: ActividadData
+  + tipo(): QString
+  + resumen(): QString
+}
+class Tarea
+class Examen
+class Proyecto
+abstract class ActividadCreator {
+  + crear(data): unique_ptr<Actividad>
+  # crearProducto(data): unique_ptr<Actividad>
+}
+class TareaCreator
+class ExamenCreator
+class ProyectoCreator
+interface IRepositorio {
+  + guardar(actividad)
+  + listar()
+}
+class RepositorioActividades
+class CsvLegacySource
+class CsvRepositorioAdapter
+class ActividadController
+class MainWindow
+
+Tarea --|> Actividad
+Examen --|> Actividad
+Proyecto --|> Actividad
+TareaCreator --|> ActividadCreator
+ExamenCreator --|> ActividadCreator
+ProyectoCreator --|> ActividadCreator
+RepositorioActividades ..|> IRepositorio
+CsvRepositorioAdapter ..|> IRepositorio
+CsvRepositorioAdapter *-- CsvLegacySource
+CsvRepositorioAdapter *-- RepositorioActividades
+ActividadController --> IRepositorio
+MainWindow --> ActividadController
+ActividadCreator ..> Actividad
+RepositorioActividades o-- Actividad
+@enduml
